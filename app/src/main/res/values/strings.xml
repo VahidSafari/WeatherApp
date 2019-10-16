@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Search</string>
+    <string name="temp">TEMP</string>
+    <string name="city_name">CITY NAME</string>
+    <string name="enter_your_city_name_here">Enter your city name here</string>
+</resources>
