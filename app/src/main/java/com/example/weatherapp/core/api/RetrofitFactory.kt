@@ -16,7 +16,6 @@ class RetrofitFactory {
                 val request: Request = chain
                     .request()
                     .newBuilder()
-                    .addHeader("Authorization", "appid b6907d289e10d714a6e88b30761fae22")
                     .build()
                 chain.proceed(request)
             }
@@ -27,7 +26,7 @@ class RetrofitFactory {
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl("https://samples.openweathermap.org/data/2.5")
+                    .baseUrl("https://samples.openweathermap.org")
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()

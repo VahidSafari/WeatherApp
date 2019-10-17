@@ -16,6 +16,7 @@
 
 
         <EditText
+            android:id="@+id/et_city_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/tv_city_name"
@@ -28,7 +29,7 @@
             android:id="@+id/tv_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            DoubleToString="@{weatherView.description}"
+            android:text="@{weatherView.description}"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +40,7 @@
             android:id="@+id/tv_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{weatherView.temp}"
+            android:text="@{Double.toString(weatherView.temp)}"
             app:layout_constraintTop_toBottomOf="@id/tv_city_name"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
