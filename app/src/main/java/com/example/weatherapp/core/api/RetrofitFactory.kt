@@ -26,7 +26,7 @@ class RetrofitFactory {
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl("https://samples.openweathermap.org")
+                    .baseUrl("https://api.openweathermap.org")
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()

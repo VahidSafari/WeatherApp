@@ -12,11 +12,12 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentWeatherBinding
+import com.example.weatherapp.feature.ui.WeatherView
 import com.example.weatherapp.feature.ui.WeatherViewModel
 import kotlinx.android.synthetic.main.fragment_weather.*
 
 class WeatherFragment : Fragment() {
-    lateinit var binding:FragmentWeatherBinding
+    lateinit var binding: FragmentWeatherBinding
 
     private val weatherViewModel by lazy {
         ViewModelProviders.of(this).get(WeatherViewModel::class.java)
@@ -26,18 +27,26 @@ class WeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        btn_search.setOnClickListener{
-            weatherViewModel.getWeatherStatus(
-                et_city_name.text.toString()
-            ).observe(viewLifecycleOwner, Observer {
-                    binding.weatherView = it
-                })
+        btn_search.setOnClickListener {
+            val message = weatherViewModel.getWeatherStatus(
+                et_city_name.text.toString())
+            if (message.isEmpty()) {
+                weatherViewModel.getWeatherStatusDB(et_city_name.text.toString())
+                    .observe(viewLifecycleOwner, Observer {
+                        if (it != null)
+                            binding.weatherView = it.toWeatherStatus().toWeatherView()
+                        else
+                            binding.weatherView = WeatherView("API PROBLEM!",0.0)
+                    })
+            } else {
+                binding.weatherView = WeatherView(message,0.0)
+            }
         }
     }
 

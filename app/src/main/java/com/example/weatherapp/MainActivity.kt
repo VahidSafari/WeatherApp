@@ -3,6 +3,7 @@ package com.example.weatherapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.weatherapp.core.db.WeatherDatabase
+import com.example.weatherapp.core.util.NetworkHandler
 import com.example.weatherapp.feature.WeatherFragment
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
             R.id.cl_main,WeatherFragment()
         ).commit()
         WeatherDatabase.init(this)
+        NetworkHandler.init(this)
     }
 
 }

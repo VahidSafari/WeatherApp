@@ -10,6 +10,6 @@ interface WeatherDao {
     suspend fun insertWeatherStatus(weatherStatusEntity: WeatherStatusEntity)
 
     @Transaction
-    @Query("SELECT * FROM WeatherStatusEntity WHERE cityName=:cityName")
+    @Query("SELECT * FROM WeatherStatusEntity WHERE cityName=:cityName LIMIT 1")
     fun getWeatherStatus(cityName: String): LiveData<WeatherStatusEntity>
 }

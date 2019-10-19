@@ -1,37 +1,28 @@
 package com.example.weatherapp.feature.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import com.example.weatherapp.core.api.Result
-import com.example.weatherapp.feature.domain.WeatherStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.example.weatherapp.core.util.NetworkHandler
 
 class WeatherRepository {
-    private val remoteDataSource = RemoteDataSource()
-    private val localDataSource = LocalDataSource()
+    private val remoteDataSource: RemoteDataSource by lazy { RemoteDataSource() }
+    private val localDataSource: LocalDataSource by lazy { LocalDataSource() }
 
-//    fun getWeatherStatusFromLocal(cityName: String) = localDataSource.getWeatherStatus(cityName)
+    fun getWeatherStatusFromDB(cityName: String) = localDataSource.getWeatherStatus(cityName)
 
-    suspend fun getWeatherStatusFromRemote(cityName: String): WeatherStatus? {
-        var result: WeatherStatus? = null
-        withContext(Dispatchers.IO) {
-            val weatherStatusResponse = remoteDataSource.getWeatherStatus(cityName)
-            when (weatherStatusResponse?.code()) {
-                200 -> {
-                    weatherStatusResponse.body()?.let {
-                        localDataSource.insertWeatherStatus(
-                            it.toWeatherStatusEntity()
-                        )
-                    }
+    suspend fun getWeatherStatus(cityName: String): String {
+        var message = ""
+        if (NetworkHandler.hasNetworkConnection()) {
+            val result = remoteDataSource.getWeatherStatus(cityName)
+                if (result is Result.Success){
+                    localDataSource.insertWeatherStatus(result.data.toWeatherStatusEntity())
+                } else if (result is Result.Error) {
+                    message = result.message
+                } else {
+                    message = "You are not connected to the Internet."
                 }
-                401 -> {
-                }
-                else -> {
-                }
-            }
-            result = localDataSource.getWeatherStatus(cityName)?.value?.toWeatherStatus()
+        } else {
+            message = "You are not connected to the Internet."
         }
-        return result
+        return message
     }
 }
