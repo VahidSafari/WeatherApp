@@ -1,11 +1,17 @@
 package com.example.weatherapp.feature.domain
 
+import com.example.weatherapp.MainActivity
 import com.example.weatherapp.feature.data.WeatherRepository
+import javax.inject.Inject
 
 
 class GetWeather {
 
-    private val weatherRepository = WeatherRepository()
+    @Inject lateinit var weatherRepository: WeatherRepository
+
+    init {
+        MainActivity.dagger.inject(this)
+    }
 
     suspend fun getWeatherStatus(cityName: String) =
         weatherRepository.getWeatherStatus(cityName)

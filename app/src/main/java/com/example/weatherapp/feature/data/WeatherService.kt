@@ -9,6 +9,6 @@ interface WeatherService {
     @GET("/data/2.5/weather")
     suspend fun getWeatherStatus(
         @Query("q") cityName: String,
-        @Query("appid") appid: String = "b6907d289e10d714a6e88b30761fae22"
+        @Query("appid") appid: String = "06f4ef7e92e40f76c0f7e9d28c46ab84"
         ): Response<WeatherStatusResponse>
 }

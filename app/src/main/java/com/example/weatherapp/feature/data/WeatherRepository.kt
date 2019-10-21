@@ -1,11 +1,19 @@
 package com.example.weatherapp.feature.data
 
+import com.example.weatherapp.MainActivity
 import com.example.weatherapp.core.api.Result
+import com.example.weatherapp.core.dagger.DaggerWeatherComponent
+import com.example.weatherapp.core.dagger.WeatherModule
 import com.example.weatherapp.core.util.NetworkHandler
+import javax.inject.Inject
 
 class WeatherRepository {
-    private val remoteDataSource: RemoteDataSource by lazy { RemoteDataSource() }
-    private val localDataSource: LocalDataSource by lazy { LocalDataSource() }
+    @Inject lateinit var remoteDataSource: RemoteDataSource
+    @Inject lateinit var localDataSource: LocalDataSource
+
+    init {
+        MainActivity.dagger.inject(this)
+    }
 
     fun getWeatherStatusFromDB(cityName: String) = localDataSource.getWeatherStatus(cityName)
 

@@ -1,21 +1,24 @@
 package com.example.weatherapp.feature.data
 
-import com.example.weatherapp.core.api.RetrofitFactory
+import com.example.weatherapp.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.example.weatherapp.core.api.Result
+import javax.inject.Inject
 
 class RemoteDataSource {
-    private val retrofit = RetrofitFactory.getRetrofit()
-    private val weatherService =
-        retrofit?.create(WeatherService::class.java)
 
+    @Inject lateinit var weatherService : WeatherService
+
+    init {
+        MainActivity.dagger.inject(this)
+    }
     suspend fun getWeatherStatus(cityName: String): Result<WeatherStatusResponse>? {
         var result : Result<WeatherStatusResponse>? = null
         withContext(Dispatchers.IO){
-            val asyncCall = weatherService?.getWeatherStatus(cityName)
+            val asyncCall = weatherService.getWeatherStatus(cityName)
             try {
-                when(asyncCall?.code()){
+                when(asyncCall.code()){
                     200 -> {
                         asyncCall.body()?.let {
                             result = Result.Success(it)

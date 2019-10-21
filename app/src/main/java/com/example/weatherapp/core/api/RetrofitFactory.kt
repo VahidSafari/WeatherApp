@@ -7,9 +7,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitFactory {
+
     companion object {
         private var retrofit: Retrofit? = null
-
 
         private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
