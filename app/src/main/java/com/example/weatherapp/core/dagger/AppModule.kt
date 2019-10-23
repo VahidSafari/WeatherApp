@@ -1,14 +1,14 @@
 package com.example.weatherapp.core.dagger
 
-import com.example.weatherapp.MainActivity
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val application: MainActivity) {
+class AppModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideApplication() = application
+    fun provideContext() = context
 }

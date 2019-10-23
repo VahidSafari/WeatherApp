@@ -41,8 +41,8 @@ class WeatherFragment : Fragment() {
                     .observe(viewLifecycleOwner, Observer {
                         if (it != null)
                             binding.weatherView = it.toWeatherStatus().toWeatherView()
-                        else
-                            binding.weatherView = WeatherView("API PROBLEM!",0.0)
+//                        else
+//                            binding.weatherView = WeatherView("API PROBLEM!",0.0)
                     })
             } else {
                 binding.weatherView = WeatherView(message,0.0)
